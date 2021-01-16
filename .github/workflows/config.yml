@@ -1,1 +1,35 @@
+name: sysuh3c
 
+on: 
+  workflow_dispatch:
+  
+jobs: 
+  Complie: 
+    name: Complie the ipk file
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+           
+      - name: Pre
+        run: |
+          wget https://downloads.openwrt.org/snapshots/targets/sunxi/cortexa53/openwrt-sdk-sunxi-cortexa53_gcc-8.4.0_musl.Linux-x86_64.tar.xz
+          tar -xvJf openwrt-sdk-sunxi-cortexa53_gcc-8.4.0_musl.Linux-x86_64.tar.xz
+          mv openwrt-sdk-sunxi-cortexa53_gcc-8.4.0_musl.Linux-x86_64 sdk
+          cd sdk
+          git clone https://github.com/LGA1150/openwrt-sysuh3c.git package/openwrt-sysuh3c
+          
+      - name: Install dependency
+        run: sudo apt-get -y install build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch python3 python2.7 unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler g++-multilib antlr3 gperf wget curl swig rsync
+        
+      - name: Complie
+        run: |
+          cp .config sdk/
+          make package/luci-app-sysuh3c/compile V=s
+          
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with: 
+          name: IPK
+          path: sdk/bin  
