@@ -16,8 +16,7 @@ jobs:
         run: |
           wget https://downloads.openwrt.org/snapshots/targets/sunxi/cortexa53/openwrt-sdk-sunxi-cortexa53_gcc-8.4.0_musl.Linux-x86_64.tar.xz
           tar -xvJf openwrt-sdk-sunxi-cortexa53_gcc-8.4.0_musl.Linux-x86_64.tar.xz
-          mv openwrt-sdk-sunxi-cortexa53_gcc-8.4.0_musl.Linux-x86_64 sdk
-          cd sdk
+          cd openwrt-sdk-sunxi-cortexa53_gcc-8.4.0_musl.Linux-x86_64
           git clone https://github.com/LGA1150/openwrt-sysuh3c.git package/openwrt-sysuh3c
           
       - name: Install dependency
@@ -25,7 +24,8 @@ jobs:
         
       - name: Complie
         run: |
-          cp .config sdk/
+          cp .config openwrt-sdk-sunxi-cortexa53_gcc-8.4.0_musl.Linux-x86_64
+          cd openwrt-sdk-sunxi-cortexa53_gcc-8.4.0_musl.Linux-x86_64
           make package/luci-app-sysuh3c/compile V=s
           
       - name: Upload artifact
