@@ -30,6 +30,12 @@ jobs:
           cd openwrt-sdk-sunxi-cortexa53_gcc-8.4.0_musl.Linux-x86_64
           make package/luci-app-sysuh3c/compile V=s
           
+      - name: Package
+        run: |
+          cd openwrt-sdk-sunxi-cortexa53_gcc-8.4.0_musl.Linux-x86_64/bin/packages/aarch64_cortex-a53/base/
+          zip -r artifact.zip ./*
+          ls -alF .
+          
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with: 
@@ -53,7 +59,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: openwrt-sdk-sunxi-cortexa53_gcc-8.4.0_musl.Linux-x86_64/bin/packages/aarch64_cortex-a53/base
+          asset_path: openwrt-sdk-sunxi-cortexa53_gcc-8.4.0_musl.Linux-x86_64/bin/packages/aarch64_cortex-a53/base/artifact.zip
           asset_name: artifact.zip
           asset_content_type: application/zip
           
