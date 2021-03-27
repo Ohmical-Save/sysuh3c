@@ -24,6 +24,6 @@ Install
 One can locate the compiled ipk files at `bin/packages/<architecture>/base`
 Upload `sysuh3c-<ver>.ipk` and `luci-app-sysuh3c-<ver>.ipk` to your router's /tmp folder, then install via opkg
 
-Download prebuilt ipks
+Download prebuilt ipks for R2S
 ---
-See [releases](https://github.com/LGA1150/openwrt-sysuh3c/releases)
+See [releases](https://github.com/Ohmically/sysuh3c/releases/tag/v1.0)
