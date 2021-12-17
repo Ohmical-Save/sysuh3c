@@ -12,7 +12,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
            
-      - name: Pre
+      - name: Install Environment
         run: |
           wget https://downloads.openwrt.org/snapshots/targets/sunxi/cortexa53/openwrt-sdk-sunxi-cortexa53_gcc-8.4.0_musl.Linux-x86_64.tar.xz
           tar -xvJf openwrt-sdk-sunxi-cortexa53_gcc-8.4.0_musl.Linux-x86_64.tar.xz
