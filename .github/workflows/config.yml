@@ -14,9 +14,9 @@ jobs:
            
       - name: Install Environment
         run: |
-          wget https://downloads.openwrt.org/snapshots/targets/sunxi/cortexa53/openwrt-sdk-sunxi-cortexa53_gcc-8.4.0_musl.Linux-x86_64.tar.xz
-          tar -xvJf openwrt-sdk-sunxi-cortexa53_gcc-8.4.0_musl.Linux-x86_64.tar.xz
-          cd openwrt-sdk-sunxi-cortexa53_gcc-8.4.0_musl.Linux-x86_64
+          wget https://downloads.openwrt.org/snapshots/targets/sunxi/cortexa53/openwrt-sdk-sunxi-cortexa53_gcc-11.2.0_musl.Linux-x86_64.tar.xz
+          tar -xvJf openwrt-sdk-sunxi-cortexa53_gcc-11.2.011.2.0_musl.Linux-x86_64.tar.xz
+          cd openwrt-sdk-sunxi-cortexa53_gcc-11.2.0_musl.Linux-x86_64
           git clone https://github.com/LGA1150/openwrt-sysuh3c.git package/openwrt-sysuh3c
           ./scripts/feeds update -a
           ./scripts/feeds install -a
@@ -26,13 +26,13 @@ jobs:
         
       - name: Complie
         run: |
-          cp .config openwrt-sdk-sunxi-cortexa53_gcc-8.4.0_musl.Linux-x86_64/
+          cp .config openwrt-sdk-sunxi-cortexa53_gcc-11.2.0_musl.Linux-x86_64/
           cd openwrt-sdk-sunxi-cortexa53_gcc-8.4.0_musl.Linux-x86_64
           make package/luci-app-sysuh3c/compile V=s
           
       - name: Package
         run: |
-          cd openwrt-sdk-sunxi-cortexa53_gcc-8.4.0_musl.Linux-x86_64/bin/packages/aarch64_cortex-a53/base/
+          cd openwrt-sdk-sunxi-cortexa53_gcc-11.2.0_musl.Linux-x86_64/bin/packages/aarch64_cortex-a53/base/
           zip -r artifact.zip ./*
           ls -alF .
           
@@ -40,7 +40,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with: 
           name: IPK
-          path: openwrt-sdk-sunxi-cortexa53_gcc-8.4.0_musl.Linux-x86_64/bin/packages/aarch64_cortex-a53/base
+          path: openwrt-sdk-sunxi-cortexa53_gcc-11.2.0_musl.Linux-x86_64/bin/packages/aarch64_cortex-a53/base
       
       - name: Create Release
         id: create_release
@@ -59,7 +59,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: openwrt-sdk-sunxi-cortexa53_gcc-8.4.0_musl.Linux-x86_64/bin/packages/aarch64_cortex-a53/base/artifact.zip
+          asset_path: openwrt-sdk-sunxi-cortexa53_gcc-11.2.0_musl.Linux-x86_64/bin/packages/aarch64_cortex-a53/base/artifact.zip
           asset_name: artifact.zip
           asset_content_type: application/zip
           
